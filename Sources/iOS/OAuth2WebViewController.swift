@@ -200,18 +200,18 @@ open class OAuth2WebViewController: UIViewController, WKNavigationDelegate {
 		
 		// we compare the scheme and host first, then check the path (if there is any). Not sure if a simple string comparison
 		// would work as there may be URL parameters attached
-		if let url = request.url, url.scheme == interceptComponents?.scheme && url.host == interceptComponents?.host {
-			let haveComponents = URLComponents(url: url, resolvingAgainstBaseURL: true)
-			if let hp = haveComponents?.path, let ip = interceptComponents?.path, hp == ip || ("/" == hp + ip) {
-				if onIntercept(url) {
-					decisionHandler(.cancel)
-				}
-				else {
-					decisionHandler(.allow)
-				}
-				return
-			}
-		}
+        if let url = request.url, url.scheme == interceptComponents?.scheme && url.host == interceptComponents?.host {
+            let haveComponents = URLComponents(url: url, resolvingAgainstBaseURL: true)
+            if let hp = haveComponents?.path, let ip = interceptComponents?.path, hp == ip || ("/" == hp + ip) {
+                if onIntercept(url) {
+                    decisionHandler(.cancel)
+                    return
+                } else {
+                    decisionHandler(.allow)
+                }
+                return
+            }
+        }
 		decisionHandler(.allow)
 	}
 	
